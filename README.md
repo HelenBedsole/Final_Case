@@ -1,5 +1,3 @@
-# Final_Case
-
 # Personal Scheduler Agent (n8n + Gemini + Google Calendar)
 
 ## 1) Executive Summary
