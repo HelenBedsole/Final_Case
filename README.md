@@ -42,11 +42,11 @@ chmod +x run.sh
 ## Demonstration Screenshots
 
 ### Node Structure
-![Node Structure](assets/architecture.png)
+![Node Structure](personal-scheduler-n8n/assets/architecture.png)
 
 ### Example Webhook Response
-![Webhook Response](assets/output.png)
+![Webhook Response](personal-scheduler-n8n/assets/output.png)
 
 ### Calendar Event Confirmation
-![Calendar Event Created](assets/proof.png)
+![Calendar Event Created](personal-scheduler-n8n/assets/proof.png)
 
