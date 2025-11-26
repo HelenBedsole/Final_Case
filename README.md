@@ -24,7 +24,6 @@ The system then automatically:
 3. Performs the appropriate calendar action  
 4. Responds with a clear JSON confirmation  
 
-**Goal**: Reduce manual overhead + eliminate scheduling mistakes  
 **Outcome**: Fully automated calendar management triggered by natural language
 
 ---
