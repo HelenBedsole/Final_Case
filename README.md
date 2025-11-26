@@ -1,4 +1,4 @@
-# Final Case Study - Intelligent Scheduling Assistant  
+# Final Case Study
 Automated Calendar Management using n8n + Gemini AI
 
 ---
