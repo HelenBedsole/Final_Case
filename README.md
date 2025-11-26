@@ -1,48 +1,103 @@
-# Personal Scheduler Agent (n8n + Gemini + Google Calendar)
-
-## 1) Executive Summary
-**Problem:** People send natural language messages about scheduling (create, update, delete). Manually handling these is time-consuming.
-
-**Solution:** A containerized n8n workflow that exposes an HTTP Webhook. It uses Google Gemini to parse intent, checks a Google Sheets event table, and performs calendar operations (create/update/delete) on Google Calendar. The system returns structured JSON confirmations and logs actions.
+# Final Case Study - Intelligent Scheduling Assistant  
+Automated Calendar Management using n8n + Gemini AI
 
 ---
 
-## 2) System Overview
+## Introduction 
 
-**Course concepts / tools used**
-- n8n workflow automation (visual orchestration)
-- Large Language Model (Google Gemini) for intent extraction
-- Google Sheets as an editable knowledge store (events)
-- Google Calendar API for persisting events
-- Docker + docker-compose for containerization and reproducible runs
+Scheduling coordination is one of the most common (and frustrating) administrative tasks among teams and student groups. When meeting times are changed, calendar updates are often forgotten, causing confusion and lost productivity.
 
-**Architecture diagram**
-(Place `assets/architecture.png` here — include screenshot of n8n canvas and a small system diagram)
+This project implements an **AI-powered scheduling assistant** using:
 
-**Data & services**
-- Google Sheets `EventsDB` (sheet: `events`) — contains `event_name,start_time,end_time,location,calendar_id,notes,internal_id`
-- Google Calendar account: `primary` calendar used for demonstration
-- Gemini API key (stored in `.env`)
+- **n8n workflow automation**
+- **Google Gemini** for natural language understanding
+- **Google Calendar API**
+- **Docker** for reproducible deployment
+
+Users can submit **plain English scheduling requests** through a webhook like:
+
+> “Move the project meeting from tomorrow at 5PM to tomorrow at 7pm”
+
+The system then automatically:
+1. Extracts intent & event details using AI  
+2. Validates event info via Google Calendar  
+3. Performs the appropriate calendar action  
+4. Responds with a clear JSON confirmation  
+
+**Goal**: Reduce manual overhead + eliminate scheduling mistakes  
+**Outcome**: Fully automated calendar management triggered by natural language
 
 ---
 
-## 3) How to Run (Local)
+## Problem & Motivation
 
-1. Copy `.env.example` to `.env` and fill in keys.
-2. Start the app (from repo root):
+Challenges with traditional scheduling:
+- Natural language must be manually translated into structured dates/times
+- Humans forget to update events
+- Repetitive administrative tasks waste precious time
+
+By **automating scheduling**, this assistant improves:
+- Reliability  
+- Speed  
+- Coordination  
+- User confidence  
+
+---
+
+## Solution Overview
+
+The **Intelligent Scheduling Assistant** converts *unstructured messages* into *structured API actions*:
+
+| User Input | System Output |
+|-----------|---------------|
+| “Cancel robotics meeting next week.” | Calendar event deleted |
+| “Schedule a study group Friday at 4pm.” | Calendar event created |
+| “Move the project meeting from tomorrow at 5PM to tomorrow at 7pm.” | Existing event updated |
+
+- Integration-ready Webhook API  
+- Human-editable data store  
+
+---
+
+## System Architecture
+
+### Tools Used (per course rubric)
+✔ n8n automation  
+✔ LLM prompt engineering  
+✔ Webhook trigger  
+✔ Google Calendar API  
+✔ Docker container deployment  
+✔ Testing & monitoring
+
+### Architecture Diagram  
+![Workflow Diagram](personal-scheduler-n8n/assets/architecture.png)
+
+---
+
+## How It Works 
+
+1. Webhook receives message from user  
+2. Gemini AI Agent parses the request into:  
+  - action (create/update/delete/query)  
+  - event_name, start_time, end_time, timezone
+3. Google Calendar node executes action  
+4. JSON response returned to user  
+5. Metrics logged for observability
+
+---
+
+## 📦 Deployment & Execution
+
+### Run Using Docker (local)
+
 ```bash
 cd docker
-chmod +x run.sh
 ./run.sh up
-# open http://localhost:5678
 ```
 
 ---
 
 ## Demonstration Screenshots
-
-### Node Structure
-![Node Structure](personal-scheduler-n8n/assets/architecture.png)
 
 ### Example Webhook Response
 ![Webhook Response](personal-scheduler-n8n/assets/output.png)
