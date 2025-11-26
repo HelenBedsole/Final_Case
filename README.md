@@ -35,3 +35,18 @@ cd docker
 chmod +x run.sh
 ./run.sh up
 # open http://localhost:5678
+```
+
+---
+
+## Demonstration Screenshots
+
+### Node Structure
+![Node Structure](assets/architecture.png)
+
+### Example Webhook Response
+![Webhook Response](assets/output.png)
+
+### Calendar Event Confirmation
+![Calendar Event Created](assets/proof.png)
+
