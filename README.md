@@ -90,6 +90,23 @@ Sample Output:
 - Docker ensures portable, consistent execution for grading and future users
 - All system steps are observable and testable through logs and webhook responses
 
+### Limitations / Edge Cases
+- Workflow assumes valid date/time expressions (“this Friday at 4 pm”).
+- Ambiguous messages (“move it later”) are not resolved — future improvement.
+- No authentication / rate limiting on webhook — vulnerable to spam requests.
+- AI may hallucinate event IDs if Google Calendar returns empty data.
+
+### Security / Privacy Considerations
+- `.env` prevents secret exposure (good).
+- However, webhook is publicly exposed — should require auth.
+- Calendar access allows deletion of events — potential risk.
+- Future work: log-only mode before action mode; OAuth scopes reduction.
+
+### Ops / Monitoring
+- n8n logs accessible via container logs.
+- No automated uptime check / metrics.
+- Future work: health endpoint + alerting.
+
 ---
 ## Source code
 GitHub Repository:
