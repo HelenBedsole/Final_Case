@@ -1,10 +1,10 @@
 import json
 import requests
 
-WEBHOOK_URL = "http://localhost:5678/webhook-test/schedule"
+WEBHOOK_URL = "http://localhost:5678/webhook-test/start"
 
 payload = {
-    "message": "Move the project meeting to 7 pm tomorrow"
+    "message": "Schedule a Google Developers Group meeting for 4pm tomorrow in Shannon Library"
 }
 
 print("Sending test request to workflow...")
