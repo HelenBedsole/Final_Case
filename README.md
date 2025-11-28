@@ -10,6 +10,14 @@ This project provides an automated scheduling assistant that interprets natural 
 
 ---
 
+### Why n8n Instead of Alternatives?
+n8n was chosen over a custom Flask API because it provides:
+- full workflow visibility,
+- built-in AI integration,
+- open-source deployability inside Docker.
+
+---
+
 ## System Overview
 
 ### Course Concepts:
@@ -39,9 +47,9 @@ This project provides an automated scheduling assistant that interprets natural 
 Pull, configure, and start the scheduling system in a single command:
 
 ```bash
-cd docker
-chmod +x run.sh
-./run.sh up
+#!/bin/bash
+docker compose -f docker/docker-compose.yml up -d
+echo "n8n is starting. Visit http://localhost:5678"
 ```
 
 This does the following:
@@ -65,20 +73,28 @@ Inside the n8n dashboard:
 ---
 
 ## How to Test the API
+To verify the system is reachable and responding:
 
-Webhook Request Example:
-```
-curl -X POST "http://localhost:5678/webhook-test/schedule" \
-     -H "Content-Type: application/json" \
-     -d '{"message": "Move the project meeting to 7 pm tomorrow"}'
-```
-Sample Output:
-```
-{
-  "output": "OK. I have updated the Project meeting to be from 6 PM to 7 PM tomorrow."
-}
+```bash
+python test_client.py
 ```
 
+---
+### Edge Case Handling (Current & Future)
+
+The system currently handles normal scheduling requests well. The following edge cases are identified for future improvement:
+
+| Edge Case | Desired Response |
+|-----------|-------------------|
+| “Schedule something later” | Ask: “Please provide a specific date and time.” |
+| Conflicting event detected | Suggest alternate time slots. |
+| Invalid date format | Respond: “I couldn't understand the date. Try YYYY-MM-DD or ‘next Friday at 4pm’.” |
+| No message body | Return HTTP 400 with error JSON. |
+| Multiple events in one message | Handle one event at a time (future feature). |
+
+These do not break the workflow, but clarifying responses will improve robustness.
+
+--- 
 
 ## Generated Outputs/Event Confirmations
 ![](assets/proof.png)
@@ -96,11 +112,17 @@ Sample Output:
 - No authentication / rate limiting on webhook — vulnerable to spam requests.
 - AI may hallucinate event IDs if Google Calendar returns empty data.
 
-### Security / Privacy Considerations
-- `.env` prevents secret exposure (good).
-- However, webhook is publicly exposed — should require auth.
-- Calendar access allows deletion of events — potential risk.
-- Future work: log-only mode before action mode; OAuth scopes reduction.
+### Security, Privacy & Ethics
+
+- Secrets are protected via `.env` → **no hardcoded credentials**.
+- Calendar modifications always require Google OAuth approval.  
+- Google Sheets acts as human oversight to prevent unintended changes.
+
+**Future Security Enhancements:**
+- Add webhook authentication token
+- Add rate limiting to prevent spam requests
+- Reduce OAuth scopes to calendar-only access
+- Optional “review-only mode” before applying event changes
 
 ### Ops / Monitoring
 - n8n logs accessible via container logs.
