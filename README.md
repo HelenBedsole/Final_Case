@@ -1,106 +1,97 @@
-# Final Case Study
-Automated Calendar Management using n8n + Gemini AI
+# Intelligent Scheduling Assistant with n8n, Google Calendar, and Docker
+
+## Executive Summary
+
+### Problem:
+Teams and student organizations frequently communicate scheduling changes through informal messages (email, chat, text). These messages must be manually interpreted and translated into calendar updates. When this does not happen reliably, confusion, missed meetings, and coordination breakdowns occur.
+
+### Solution:
+This project provides an automated scheduling assistant that interprets natural language instructions and synchronizes them with Google Calendar. The system uses n8n for automation, Google Gemini for intent extraction, Google Sheets for mapping event information, and Docker for reproducible deployment. Users can schedule, update, or remove events simply by sending ordinary English instructions to a webhook endpoint.
 
 ---
 
-## Introduction 
+## System Overview
 
-Scheduling coordination is one of the most common (and frustrating) administrative tasks among teams and student groups. When meeting times are changed, calendar updates are often forgotten, causing confusion and lost productivity.
+### Course Concepts:
 
-This project implements an **AI-powered scheduling assistant** using:
+- Workflow automation with n8n, including trigger and action nodes
+- Prompt engineering with a large language model (Google Gemini)
+- Integration with Google services (Sheets + Calendar REST API)
+- Docker containerization for deployment reproducibility
+- API-driven validation and monitoring via webhook testing
 
-- **n8n workflow automation**
-- **Google Gemini** for natural language understanding
-- **Google Calendar API**
-- **Docker** for reproducible deployment
+### Architecture Diagram:
 
-Users can submit **plain English scheduling requests** through a webhook like:
+![](architecture.png)
 
-> “Move the project meeting from tomorrow at 5PM to tomorrow at 7pm”
 
-The system then automatically:
-1. Extracts intent & event details using AI  
-2. Validates event info via Google Calendar  
-3. Performs the appropriate calendar action  
-4. Responds with a clear JSON confirmation  
+### Data / Models / Services:
 
-**Outcome**: Fully automated calendar management triggered by natural language
-
----
-
-## Problem & Motivation
-
-Challenges with traditional scheduling:
-- Natural language must be manually translated into structured dates/times
-- Humans forget to update events
-- Repetitive administrative tasks waste precious time
-
-By **automating scheduling**, this assistant improves:
-- Reliability  
-- Speed  
-- Coordination  
-- User confidence  
+- NLP intent model extracts: action, event name, date, start time, end time
+- Google Sheets: reference table for matching events to calendars
+- Google Calendar: source of truth for event data
+- Webhook: request/response pipeline for system interaction
 
 ---
 
-## Solution Overview
+## One-Command Launch
 
-The **Intelligent Scheduling Assistant** converts *unstructured messages* into *structured API actions*:
-
-| User Input | System Output |
-|-----------|---------------|
-| “Cancel robotics meeting next week.” | Calendar event deleted |
-| “Schedule a study group Friday at 4pm.” | Calendar event created |
-| “Move the project meeting from tomorrow at 5PM to tomorrow at 7pm.” | Existing event updated |
-
-- Integration-ready Webhook API  
-- Human-editable data store  
-
----
-
-## System Architecture
-
-### Tools Used (per course rubric)
-✔ n8n automation  
-✔ LLM prompt engineering  
-✔ Webhook trigger  
-✔ Google Calendar API  
-✔ Docker container deployment  
-✔ Testing & monitoring
-
-### Architecture Diagram  
-![Workflow Diagram](personal-scheduler-n8n/assets/architecture.png)
-
----
-
-## How It Works 
-
-1. Webhook receives message from user  
-2. Gemini AI Agent parses the request into:  
-  - action (create/update/delete/query)  
-  - event_name, start_time, end_time, timezone
-3. Google Calendar node executes action  
-4. JSON response returned to user  
-5. Metrics logged for observability
-
----
-
-## 📦 Deployment & Execution
-
-### Run Using Docker (local)
+Pull, configure, and start the scheduling system in a single command:
 
 ```bash
 cd docker
 ./run.sh up
 ```
 
+This does the following:
+- Starts the n8n workflow environment in Docker
+- Loads environment variables from .env
+- Exposes local UI at: http://localhost:5678
+- Ensures reproducible deployment regardless of OS
+
 ---
 
-## Demonstration Screenshots
+## How to Run (Local)
 
-### Example Webhook Response
-![Webhook Response](personal-scheduler-n8n/assets/output.png)
+### Import Workflow
+Inside the n8n dashboard:
 
-### Calendar Event Confirmation
-![Calendar Event Created](personal-scheduler-n8n/assets/proof.png)
+- Open http://localhost:5678
+- Import workflows/personal-scheduler.json
+- Activate Google credentials (Sheets + Calendar)
+- Enable the workflow
+
+---
+
+## How to Test the API
+
+Webhook Request Example:
+```
+curl -X POST "http://localhost:5678/webhook-test/schedule" \
+     -H "Content-Type: application/json" \
+     -d '{"message": "Move the project meeting to 7 pm tomorrow"}'
+```
+Sample Output:
+```
+{
+  "output": "OK. I have updated the Project meeting to be from 6 PM to 7 PM tomorrow."
+}
+```
+![](output.png)
+
+## Generated Outputs/Event Confirmations
+![](proof.png)
+
+---
+## Design Decisions
+
+- Google Sheets is leveraged as an editable human oversight layer
+- Docker ensures portable, consistent execution for grading and future users
+- All system steps are observable and testable through logs and webhook responses
+
+---
+## Source code
+GitHub Repository:
+[https://github.com/HelenBedsole/Final_Case]
+
 
