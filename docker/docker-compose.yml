@@ -1,1 +1,19 @@
+version: "3.9"
+
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_PORT=5678
+      - GENERIC_TIMEZONE=America/New_York
+      - N8N_BASIC_AUTH_ACTIVE=false
+      - N8N_BASIC_AUTH_USER=
+      - N8N_BASIC_AUTH_PASSWORD=
+      - GOOGLE_API_CREDENTIALS=${GOOGLE_API_CREDENTIALS}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    volumes:
+      - ./n8n_data:/home/node/.n8n
+    restart: always
 
