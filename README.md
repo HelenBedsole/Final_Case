@@ -22,7 +22,7 @@ This project provides an automated scheduling assistant that interprets natural 
 
 ### Architecture Diagram:
 
-![](architecture.png)
+![](assets/architecture.png)
 
 
 ### Data / Models / Services:
@@ -77,10 +77,10 @@ Sample Output:
   "output": "OK. I have updated the Project meeting to be from 6 PM to 7 PM tomorrow."
 }
 ```
-![](output.png)
+![](assets/output.png)
 
 ## Generated Outputs/Event Confirmations
-![](proof.png)
+![](assets/proof.png)
 
 ---
 ## Design Decisions
