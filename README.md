@@ -77,7 +77,7 @@ Sample Output:
   "output": "OK. I have updated the Project meeting to be from 6 PM to 7 PM tomorrow."
 }
 ```
-![](assets/output.png)
+
 
 ## Generated Outputs/Event Confirmations
 ![](assets/proof.png)
