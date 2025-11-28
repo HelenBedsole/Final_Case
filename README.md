@@ -40,6 +40,7 @@ Pull, configure, and start the scheduling system in a single command:
 
 ```bash
 cd docker
+chmod +x run.sh
 ./run.sh up
 ```
 
