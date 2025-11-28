@@ -1,1 +1,16 @@
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore environment variable files
+.env
+
+# Ignore Docker n8n data volume
+docker/n8n_data/
+docker/.env
+
+# IDEs & OS junk
+.vscode/
+.idea/
+.DS_Store
 
